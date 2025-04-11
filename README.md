@@ -1,10 +1,5 @@
 # Automated Glioma Segmentation on Post-Treatment MRI Scans using Deep Neural Networks
 
-**Author:** Vikramjit Bora
-**Degree:** M.Sc. in Artificial Intelligence and Machine Learning, University of Birmingham 
-
-
----
 
 ## Abstract
 
