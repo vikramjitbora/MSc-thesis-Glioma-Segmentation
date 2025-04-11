@@ -1,76 +1,67 @@
 # Automated Glioma Segmentation on Post-Treatment MRI Scans using Deep Neural Networks
 
-**Author:** Vikramjit Bora  
-**Degree:** M.Sc. in Artificial Intelligence and Machine Learning  
-**University:** University of Birmingham  
+**Author:** Vikramjit Bora
+**Degree:** M.Sc. in Artificial Intelligence and Machine Learning, University of Birmingham 
+
 
 ---
-
-## Overview
-
-This dissertation addresses the critical challenge of segmenting gliomas in post-treatment MRI scans—a task crucial for improving clinical outcomes in brain tumor patients. By developing a novel deep learning architecture that combines residual connections and spatial attention mechanisms within a 3D U-Net framework, the research significantly enhances the differentiation between residual tumor tissue and treatment-related changes.
-
 
 ## Abstract
 
-Gliomas are among the most aggressive brain tumors, and their post-treatment management is complicated by anatomical changes and treatment artifacts in MRI scans. This work introduces a **Residual 3D U-Net with Attention** that leverages deep neural networks to improve segmentation accuracy. The model is designed to capture both fine structural details and high-level contextual information, which is crucial for distinguishing between residual tumor tissue and treatment effects. The research demonstrates significant improvements in segmentation performance, validated by metrics such as the Dice Coefficient and lesion-wise sensitivity.
+This research tackles the critical challenge of segmenting gliomas in post-treatment Magnetic Resonance Imaging (MRI) scans, a vital task for managing brain tumor patients. Gliomas, especially aggressive forms like glioblastomas, require accurate monitoring after treatment. However, post-treatment MRIs are complex due to surgical changes (resection cavities) and treatment-induced effects, making it hard to distinguish remaining tumor tissue from these changes. This project introduces a novel deep learning model, a **Residual 3D U-Net with an Attention mechanism**, specifically designed to improve segmentation accuracy in these challenging post-treatment conditions. By combining residual connections for deeper feature learning and spatial attention to focus on relevant areas, the model enhances the reliability of identifying residual tumor versus treatment effects, potentially leading to better clinical decision-making and patient outcomes.
 
----
+## Motivation
 
-## Motivation and Objectives
+Accurate segmentation of post-treatment MRIs is crucial for effective glioma patient management. Distinguishing residual tumor from treatment effects (like inflammation or resection cavities) informs critical decisions about further treatment (e.g., additional surgery, radiation). Manual segmentation is time-consuming and prone to variability. Automated, reliable methods can provide consistent results, aiding clinicians in making informed decisions and potentially improving patient quality of life.
 
-- **Clinical Relevance:** Improve the accuracy of glioma segmentation in post-treatment MRIs, aiding in more effective patient management.
-- **Technical Challenge:** Address the difficulties introduced by resection cavities and treatment-induced artifacts.
-- **Research Objectives:**
-  - Enhance segmentation accuracy through a novel architecture.
-  - Tackle class imbalance with a combined loss function (focal loss + cross-entropy loss).
-  - Provide robust quantitative and qualitative evaluation of the proposed method.
+## Problem Addressed
 
----
+* **Complexity of Post-Treatment MRIs:** Scans taken after surgery, radiation, or chemotherapy often contain resection cavities, inflammation, and other artifacts that obscure tumor boundaries.
+* **Difficulty in Differentiation:** Standard algorithms struggle to reliably distinguish residual/recurrent tumor tissue from non-cancerous treatment-related changes.
+* **Performance Gap:** Many existing segmentation models are trained on pre-treatment scans and perform poorly on the unique characteristics of post-treatment images.
 
-## Technical Contributions
+## Proposed Solution: Residual 3D U-Net with Attention
 
-- **Architecture Innovation:**  
-  Combines residual connections with a spatial attention mechanism in a 3D U-Net framework to enhance feature learning.
-- **Loss Function Design:**  
-  Utilizes a customized loss function that integrates focal loss and cross-entropy loss, effectively addressing the imbalance in tumor versus background regions.
-- **Evaluation Metrics:**  
-  Employs lesion-wise Dice Coefficient and sensitivity metrics to rigorously assess segmentation performance.
-- **Comparative Study:**  
-  Demonstrates the advantages of the proposed model over standard 3D U-Net variants in terms of segmentation accuracy and robustness.
+This project proposes and evaluates a deep neural network architecture tailored for post-treatment glioma segmentation:
 
----
+* **Backbone:** Based on the proven U-Net architecture for medical image segmentation.
+* **3D Convolutions:** Processes volumetric MRI data directly, preserving spatial context unlike 2D slice-by-slice methods.
+* **Residual Connections:** Inspired by ResNet, these allow the network to learn deeper, more complex features by facilitating gradient flow during training, improving robustness.
+* **Attention Mechanism:** Enables the model to focus selectively on the most relevant image regions (features) for segmentation, particularly useful for identifying small or subtle tumor areas amidst complex post-treatment changes.
 
-## Methodology
+## Key Contributions
 
-1. **Model Architecture:**
-   - **Encoder:** Extracts multi-scale features using residual blocks and max-pooling.
-   - **Decoder:** Utilizes transpose convolutions for upsampling and integrates encoder features via skip connections.
-   - **Attention Mechanism:** Applies spatial attention to focus on the most relevant regions for segmentation.
-2. **Loss Function:**  
-   A combined loss function balances focal loss and cross-entropy loss to improve training stability and performance.
-3. **Implementation:**  
-   Detailed experimentation with learning rate schedulers and regularization techniques ensured optimal training of the network on the BraTS 2024 dataset.
+* Developed a novel **Residual 3D U-Net with Attention** architecture specifically for segmenting gliomas in *post-treatment* MRI scans.
+* Improved segmentation accuracy by effectively combining residual learning (for depth) and attention mechanisms (for focus).
+* Addressed class imbalance inherent in medical datasets (e.g., small tumor regions vs. background) using a combined Focal Loss and Cross-Entropy loss function for more stable and effective training.
+* Provided a comparative analysis demonstrating the superiority of the proposed model against baseline 3D U-Net, 3D U-Net with Attention, and Residual 3D U-Net architectures on key metrics like the Dice coefficient.
 
----
+## Methodology & Tech Stack
 
-## Experiments and Results
+* **Core Technique:** Deep Learning, 3D Convolutional Neural Networks (CNNs) based architectures.
+* **Model:** Residual 3D U-Net with Attention 
+* **Frameworks/Libraries:** Pytorch
+* **Data:** Subset of the BraTS 2024 challenge dataset, focusing on post-treatment multi-parametric MRI scans (T1, T1-Gd, T2, FLAIR sequences)
+* **Loss Function:** Combined Focal Loss and Cross-Entropy Loss 
+* **Evaluation Metrics:** Lesion-wise Dice Coefficient, Sensitivity 
 
-- **Dataset:**  
-  Utilizes a subset of the 2024 BraTS dataset for post-treatment glioma segmentation.
-- **Evaluation:**  
-  The proposed model consistently achieves higher Dice scores (up to ~0.87 for whole tumor segmentation) and improved sensitivity, outperforming baseline models.
-- **Visual Analysis:**  
-  Qualitative results show close alignment between predicted segmentation and ground truth, particularly in delineating complex tumor boundaries and resection cavities.
+## Results Highlights
+
+* The proposed **Residual 3D U-Net with Attention** model achieved the highest performance among the evaluated architectures.
+* **Quantitative:** Achieved a Dice coefficient of 0.87 for whole tumor segmentation and 0.63 for resection cavity segmentation on the test subset, demonstrating significant improvement over baseline models.
+* **Qualitative:** Visual analysis showed the model accurately segmented tumors and resection cavities in many cases, though challenges remain with highly irregular shapes or fine details.
+
+## Code Repository
+
+The complete code, including data loading, preprocessing, model implementation, training, and evaluation, is available in the `segmentation.ipynb` Jupyter Notebook within the project's GitLab repository:
+
+[**View Code on GitLab**] - https://git.cs.bham.ac.uk/projects-2023-24/vxb330
 
 
-## Contact
+## How to Run
 
-For further details or collaboration inquiries, please feel free to contact me:
+Instructions for setting up the environment and running the code can be found within the `segmentation.ipynb` notebook in the repository. Key steps involve data loading, preprocessing, model definition, and executing the training/evaluation cells.
 
-- **Email:** vikramjit.bora@gmail.com
-- **LinkedIn:** https://www.linkedin.com/in/vikramjitbora/
+## Keywords
 
----
-
-*This repository is a demonstration of my master's dissertation work aimed at advancing medical image segmentation through deep learning techniques.*
+Glioma Segmentation, Brain Tumor, Post-Treatment MRI, Deep Learning, Medical Image Segmentation, 3D U-Net, Residual Networks (ResNet), Attention Mechanism, Convolutional Neural Networks (CNN), Artificial Intelligence, Machine Learning, BraTS Challenge
